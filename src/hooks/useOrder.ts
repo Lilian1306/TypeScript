@@ -4,9 +4,10 @@ import type { MenuItem, OrderItem } from '../types'
 export default function useOrder() {
     const [order, setOrder] = useState<OrderItem[]>([])
     
-    const addItem = (item: MenuItem) => {
 
-        const itemExist = order.find(orderItem => orderItem.id === item.id )
+    // Codigo para agregar items a nuestro consumo. 
+    const addItem = (item: MenuItem) => {
+     const itemExist = order.find(orderItem => orderItem.id === item.id )
         if(itemExist){
             const updateOrder = order.map(orderItem => orderItem.id === item.id ? 
                 {...orderItem, quantity: orderItem.quantity + 1} : //que hace este codigo: tomar una copia de lo que ya haya en nuestra order y lo incremente en uno
@@ -19,10 +20,16 @@ export default function useOrder() {
        }
     }
 
+
+    // Codigo para remover items de nuestro consumo y hacer que nuestro button tenga funcion. 
+    const removeItem = (id: MenuItem['id']) => {
+        setOrder(order.filter(item => item.id !== id))
+    }
+
     
- 
     return {
        order,
-       addItem
+       addItem,
+       removeItem
     }
 }
